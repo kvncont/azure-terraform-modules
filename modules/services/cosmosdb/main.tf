@@ -32,12 +32,12 @@ resource "azurerm_cosmosdb_account" "cosmosdb_account" {
   enable_free_tier                  = true
   enable_automatic_failover         = false
   analytical_storage_enabled        = false
-  is_virtual_network_filter_enabled = true
+  # is_virtual_network_filter_enabled = true
   # public_network_access_enabled     = true
 
   # IP's to allow access from azure portal
   # https://docs.microsoft.com/es-es/azure/cosmos-db/how-to-configure-firewall?WT.mc_id=Portal-Microsoft_Azure_DocumentDB#connections-from-the-azure-portal
-  # ip_range_filter                   = "104.42.195.92,40.76.54.131,52.176.6.30,52.169.50.45,52.187.184.26"
+  ip_range_filter                   = "104.42.195.92,40.76.54.131,52.176.6.30,52.169.50.45,52.187.184.26"
 
   #   capabilities {
   #     name = "EnableServerless"
@@ -84,14 +84,14 @@ resource "azurerm_cosmosdb_sql_database" "cosmosdb_sql_database" {
   account_name        = var.cosmosdb_account_name
 }
 
-# resource azurerm_cosmosdb_sql_container cosmosdb_sql_container_coll_clothes {
-#   name = "Clothes"
-#   resource_group_name = var.resource_group_name
-#   account_name = azurerm_cosmosdb_account.cosmosdb_account.name
-#   database_name = azurerm_cosmosdb_sql_database.cosmosdb_sql_database.name
-#   partition_key_path = "/ClothesId"
-#   throughput = 400
-# }
+resource azurerm_cosmosdb_sql_container cosmosdb_sql_container_coll_clothes {
+  name = "templates"
+  resource_group_name = var.resource_group_name
+  account_name = azurerm_cosmosdb_account.cosmosdb_account.name
+  database_name = azurerm_cosmosdb_sql_database.cosmosdb_sql_database.name
+  partition_key_path = "/partitionKey"
+  throughput = 400
+}
 
 # resource azurerm_cosmosdb_sql_stored_procedure cosmosdb_sql_stored_procedure_sp_example {
 #   name                = "sp_example"
