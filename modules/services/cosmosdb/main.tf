@@ -47,6 +47,7 @@ resource "azurerm_cosmosdb_account" "cosmosdb_account" {
   #   id                                   = azurerm_subnet.subnet_terraform.id
   #   ignore_missing_vnet_service_endpoint = false 
   # }
+
   consistency_policy {
     consistency_level = "Session"
   }
@@ -79,12 +80,12 @@ resource "azurerm_cosmosdb_account" "cosmosdb_account" {
 }
 
 resource "azurerm_cosmosdb_sql_database" "cosmosdb_sql_database" {
-  name                = var.cosmosdb_database_name
+  name                = azurerm_cosmosdb_account.cosmosdb_account.name
   resource_group_name = var.resource_group_name
   account_name        = var.cosmosdb_account_name
 }
 
-resource azurerm_cosmosdb_sql_container cosmosdb_sql_container_coll_clothes {
+resource "azurerm_cosmosdb_sql_container cosmosdb_sql_container" {
   name = "templates"
   resource_group_name = var.resource_group_name
   account_name = azurerm_cosmosdb_account.cosmosdb_account.name
@@ -98,7 +99,7 @@ resource azurerm_cosmosdb_sql_container cosmosdb_sql_container_coll_clothes {
 #   resource_group_name = var.resource_group_name
 #   account_name        = azurerm_cosmosdb_account.cosmosdb_account.name
 #   database_name       = azurerm_cosmosdb_sql_database.cosmosdb_sql_database.name
-#   container_name      = azurerm_cosmosdb_sql_container.cosmosdb_sql_container_coll_clothes.name
+#   container_name      = azurerm_cosmosdb_sql_container.cosmosdb_sql_container.name
 
 #   body = <<BODY
 #       function () { var context = getContext(); var response = context.getResponse(); response.setBody('Hello, World'); }
@@ -107,7 +108,7 @@ resource azurerm_cosmosdb_sql_container cosmosdb_sql_container_coll_clothes {
 
 # resource azurerm_cosmosdb_sql_trigger cosmosdb_sql_trigger_example {
 #   name         = "test-trigger"
-#   container_id = azurerm_cosmosdb_sql_container.cosmosdb_sql_container_coll_clothes.id
+#   container_id = azurerm_cosmosdb_sql_container.cosmosdb_sql_container.id
 #   body         = "function trigger(){}"
 #   operation    = "Delete"
 #   type         = "Post"
