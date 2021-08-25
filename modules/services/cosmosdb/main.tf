@@ -85,7 +85,7 @@ resource "azurerm_cosmosdb_sql_database" "cosmosdb_sql_database" {
   account_name        = var.cosmosdb_account_name
 }
 
-resource "azurerm_cosmosdb_sql_container cosmosdb_sql_container" {
+resource "azurerm_cosmosdb_sql_container" "cosmosdb_sql_container" {
   name = "templates"
   resource_group_name = var.resource_group_name
   account_name = azurerm_cosmosdb_account.cosmosdb_account.name
