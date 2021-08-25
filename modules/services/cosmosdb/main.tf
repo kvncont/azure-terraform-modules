@@ -80,9 +80,9 @@ resource "azurerm_cosmosdb_account" "cosmosdb_account" {
 }
 
 resource "azurerm_cosmosdb_sql_database" "cosmosdb_sql_database" {
-  name                = azurerm_cosmosdb_account.cosmosdb_account.name
+  name                = var.database_name
   resource_group_name = var.resource_group_name
-  account_name        = var.cosmosdb_account_name
+  account_name        = azurerm_cosmosdb_account.cosmosdb_account.name
 }
 
 resource "azurerm_cosmosdb_sql_container" "cosmosdb_sql_container" {
