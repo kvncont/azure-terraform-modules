@@ -37,7 +37,7 @@ resource "azurerm_cosmosdb_account" "cosmosdb_account" {
 
   # IP's to allow access from azure portal
   # https://docs.microsoft.com/es-es/azure/cosmos-db/how-to-configure-firewall?WT.mc_id=Portal-Microsoft_Azure_DocumentDB#connections-from-the-azure-portal
-  ip_range_filter                   = "104.42.195.92,40.76.54.131,52.176.6.30,52.169.50.45,52.187.184.26"
+  ip_range_filter                   = var.ip_range_filter
 
   #   capabilities {
   #     name = "EnableServerless"
